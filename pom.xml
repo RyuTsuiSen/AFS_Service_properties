@@ -40,6 +40,24 @@
 						</configuration>
 					</execution>
  					<execution>
+						<id>int</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+						<configuration>
+							<basedir>src/main/resources/properties</basedir>
+							<includes>
+								<include>*.modele</include>
+							</includes>
+							<inputFilePattern>.modele</inputFilePattern>
+							<outputFilePattern>.</outputFilePattern>
+							<outputFilePattern>.</outputFilePattern>
+							<outputDir>../../../../target/resources/conf/int</outputDir>
+							<tokenValueMap>../dictionnaire/dictionnaire-int.properties</tokenValueMap>
+						</configuration>
+					</execution>
+ 					<execution>
 						<id>rec</id>
 						<phase>generate-resources</phase>
 						<goals>
@@ -57,6 +75,24 @@
 							<tokenValueMap>../dictionnaire/dictionnaire-rec.properties</tokenValueMap>
 						</configuration>
 					</execution>
+ 					<execution>
+						<id>prod</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+						<configuration>
+							<basedir>src/main/resources/properties</basedir>
+							<includes>
+								<include>*.modele</include>
+							</includes>
+							<inputFilePattern>.modele</inputFilePattern>
+							<outputFilePattern>.</outputFilePattern>
+							<outputFilePattern>.</outputFilePattern>
+							<outputDir>../../../../target/resources/conf/prod</outputDir>
+							<tokenValueMap>../dictionnaire/dictionnaire-prod.properties</tokenValueMap>
+						</configuration>
+					</execution>
 				</executions>
 
 			</plugin>
@@ -66,7 +102,9 @@
 				<configuration>
 					<descriptors>
 						<descriptor>src/assembly/assembly-dev.xml</descriptor>
+						<descriptor>src/assembly/assembly-int.xml</descriptor>
 						<descriptor>src/assembly/assembly-rec.xml</descriptor>
+						<descriptor>src/assembly/assembly-prod.xml</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>
