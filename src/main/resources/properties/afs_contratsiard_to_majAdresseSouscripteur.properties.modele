@@ -1,2 +1,2 @@
-ti080.user=@token1@
-ti080.datastoreid=@token2@
+ti080.user=@ti080.userid@
+ti080.datastoreid=@ti080.datastoreid@
