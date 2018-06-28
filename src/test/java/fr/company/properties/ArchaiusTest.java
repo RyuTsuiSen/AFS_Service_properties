@@ -1,8 +1,16 @@
 package fr.company.properties;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
+
 import java.util.Collections;
 
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration.event.ConfigurationEvent;
+import org.apache.commons.configuration.event.ConfigurationListener;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -16,9 +24,6 @@ import com.netflix.config.DynamicStringListProperty;
 import com.netflix.config.DynamicStringMapProperty;
 import com.netflix.config.DynamicStringProperty;
 import com.netflix.config.jmx.ConfigJMXManager;
-
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
 public class ArchaiusTest {
 
 	@BeforeAll
@@ -26,9 +31,12 @@ public class ArchaiusTest {
 		System.out.println("@BeforeAll - executes once before all test methods in this class");
 		AbstractConfiguration configInstance = ConfigurationManager.getConfigInstance();
 		ConfigJMXManager.registerConfigMbean(configInstance);
-		
-		DynamicStringProperty sampleProp = DynamicPropertyFactory.getInstance().getStringProperty("stringprop", "");
-		sampleProp.addCallback(() -> System.out.println("Quelqun change la valeur"));
+		ConfigurationManager.getConfigInstance().addConfigurationListener(new ConfigurationListener() {
+			@Override
+			public void configurationChanged(ConfigurationEvent event) {
+				System.out.println("Event received: " + event.getType() + "," + event.getPropertyName() + "," + event.isBeforeUpdate() + "," + event.getPropertyValue());
+			}
+		}); 
 	}
 
 	@BeforeEach
